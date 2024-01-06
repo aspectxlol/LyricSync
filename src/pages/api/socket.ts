@@ -14,7 +14,7 @@ const SocketHandler = (
     const io = new Server<ClientEvents>(res.socket.server)
     
     io.on('connection', (socket: Socket) => {
-      socket.on('registerClient', (clientType: string) => {
+      socket.on('RegisterClient', (clientType: string) => {
         socket.join(clientType)
       })
     })
