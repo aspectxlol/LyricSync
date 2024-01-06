@@ -8,6 +8,23 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+@layer base {
+  :root {
+    --text: #041016;
+    --background: #ecf8fe;
+    --primary: #66afd1;
+    --secondary: #8ecbec;
+    --accent: #619de5;
+  }
+  .dark {
+    --text: #e9f5fb;
+    --background: #010d13;
+    --primary: #2e7799;
+    --secondary: #135071;
+    --accent: #1a559e;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
