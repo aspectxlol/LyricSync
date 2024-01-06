@@ -24,7 +24,7 @@ export default function Preview() {
   return (
     <div className="flex text-center items-center justify-center min-h-full">
       <h1 className="text-center m-auto font-bold text-wrap lg:text-9xl">
-        <LyricPreview />
+
       </h1>
     </div>
   )
