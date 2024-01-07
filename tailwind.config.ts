@@ -23,10 +23,6 @@ const config: Config = {
       '4xl': '5.063rem',
       '5xl': '7.595rem',
     },
-    fontFamily: {
-      heading: 'NTR',
-      body: 'Roboto',
-    },
     fontWeight: {
       normal: '400',
       bold: '700',
