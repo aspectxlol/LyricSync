@@ -13,6 +13,8 @@ const config: Config = {
       'primary': 'var(--primary)',
       'secondary': 'var(--secondary)',
       'accent': 'var(--accent)',
+      'black': '#000000',
+      'white': '#ffffff'
     },
     fontSize: {
       sm: '0.667rem',
