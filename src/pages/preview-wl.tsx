@@ -1,10 +1,10 @@
 import { schedule } from "@LyricSync/testData"
-import { ClientEvents } from "@LyricSync/types"
+import { ClientEvents, ServerEvents } from "@LyricSync/types"
 import { useState, useEffect } from "react"
 import { Socket, io } from "socket.io-client"
 
 export default function Preview() {
-  const [Socket, setSocket] = useState<Socket<ClientEvents> | null>()
+  const [Socket, setSocket] = useState<Socket<ServerEvents, ClientEvents> | null>()
   const [currentSong, setCurrentSong] = useState('')
   const [currentLyric, setCurrentLyric] = useState(0)
 

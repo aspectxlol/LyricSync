@@ -23,9 +23,17 @@ interface basicClient {
 interface ClientEvents {
   RegisterClient: (clientType: "Preview" | "Control" | "Admin") => void
   sendLyric: (songId: string, lyric: number) => void
-  Lyric: (songId: string, lyric: number) => void
 }
 
 interface ServerEvents {
   Lyric: (songId: string, lyric: number) => void
+}
+
+interface Song {
+  id: string
+  title: string
+  lyrics: string[]
+  createdAt: Date
+  updatedAt: Date
+  scheduleId: string
 }

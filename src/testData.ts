@@ -1,4 +1,6 @@
-export const schedule = [
+import { Song } from "./types";
+
+export const schedule: Song[] = [
     {
       id: 'item1',
       title: 'Dengan Gambus dan Kecapi',
