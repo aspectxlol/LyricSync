@@ -15,17 +15,15 @@ export default function LyricSelector({ Socket, currentSong }: LyricSelectorProp
     e.preventDefault()
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       const newButtonIndex = (e.key === "ArrowDown")
-        ? (currentButtonIndex + 1) % (schedule.find(v => v.id === currentSong)?.lyrics.length ?? 0)
-        : (currentButtonIndex - 1) % (schedule.find(v => v.id === currentSong)?.lyrics.length ?? 0);
+        ? (currentButtonIndex + 1) % (schedule.find(v => v.id === currentSong)?.lyrics.length! + 1 ?? 0)
+        : (currentButtonIndex + (schedule.find(v => v.id === currentSong)?.lyrics.length! + 1 ?? 0) - 1) % (schedule.find(v => v.id === currentSong)?.lyrics.length! + 1 ?? 0);
       setCurrentButtonIndex(newButtonIndex);
       sendLyric(currentSong, newButtonIndex - 1)
     }
   };
 
   useEffect(() => {
-    // console.log((schedule.find(v => v.id === currentSong)?.lyrics.length ?? 0), currentButtonIndex)
-
-    console.log(currentButtonIndex - 1, schedule.find(v => v.id === currentSong)?.lyrics[currentButtonIndex - 1])
+    console.log(currentButtonIndex, currentButtonIndex - 1, schedule.find(v => v.id === currentSong)?.lyrics[currentButtonIndex - 1])
   }, [currentSong, currentButtonIndex])
 
   function sendLyric(currentSong: string, index: number) {
@@ -39,7 +37,7 @@ export default function LyricSelector({ Socket, currentSong }: LyricSelectorProp
 
   return (
     <>
-      <div className='border-solid rounded flex flex-col border-accent border-4 p-1 m-4 max-h-72 overflow-auto' onKeyDown={handleKeyDown}>
+      <div className='border-solid rounded flex flex-col border-secondary border-4 p-1 m-4 max-h-96 overflow-auto' onKeyDown={handleKeyDown}>
         {
           schedule.find(v => v.id === currentSong)?.lyrics.map((v, i) => {
             if (v.length <= 0) return;
@@ -49,7 +47,7 @@ export default function LyricSelector({ Socket, currentSong }: LyricSelectorProp
                 key={`lyrics-${i}`}
                 id={"button-" + i}
                 className={
-                  `focus:outline-none text-left m-1 ${(i + 1) === currentButtonIndex ? 'bg-primary' : ''} p-1 rounded border-2 inline-block`}
+                  `focus:outline-none text-left m-1 ${(i + 1) === currentButtonIndex ? 'bg-primary' : ''} p-1 rounded border-2 inline-block hover:bg-secondary`}
               >
                 <span className="m-1 border-r-2 p-1">{i}</span>
                 <span>{v}</span>

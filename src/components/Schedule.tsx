@@ -30,7 +30,7 @@ export default function Schedule({ setCurrentSong, currentSong }: ScheduleProps)
   }
 
   return (
-    <div className='border-solid rounded flex flex-col border-black border-4 p-1 m-4 max-h-96 overflow-auto'>
+    <div className='border-solid rounded flex flex-col border-secondary border-4 p-1 m-4 max-h-full overflow-auto'>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="schedule">
           {(provided) => (
@@ -43,7 +43,7 @@ export default function Schedule({ setCurrentSong, currentSong }: ScheduleProps)
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       id={item.id}
-                      className={`m-2 rounded border-solid border-2 p-2 ${item.id === currentSong ? 'bg-primary' : ''}`}
+                      className={`m-2 rounded border-solid border-2 border-black p-2 ${item.id === currentSong ? 'bg-primary' : ''}`}
                       onClick={(e) => handleClick(e)}
                     >
                       <ScheduleItemCard
