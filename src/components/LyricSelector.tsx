@@ -49,7 +49,7 @@ export default function LyricSelector({ Socket, currentSong }: LyricSelectorProp
                 key={`lyrics-${i}`}
                 id={"button-" + i}
                 className={
-                  `focus:outline-none text-left m-1 ${(i + 1) === currentButtonIndex ? 'bg-primary' : ''} p-1 border-sold rounded border-2 inline-block`}
+                  `focus:outline-none text-left m-1 ${(i + 1) === currentButtonIndex ? 'bg-primary' : ''} p-1 rounded border-2 inline-block`}
               >
                 <span className="m-1 border-r-2 p-1">{i}</span>
                 <span>{v}</span>
