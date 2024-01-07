@@ -1,4 +1,5 @@
 import LyricSelector from "@LyricSync/components/LyricSelector"
+import Schedule from "@LyricSync/components/Schedule"
 import { schedule } from "@LyricSync/testData"
 import { ClientEvents, ServerEvents } from "@LyricSync/types"
 import { useState, useEffect } from "react"
@@ -27,7 +28,11 @@ export default function Dashboard() {
 
   return (
     <>
-      <div>
+      <div className="grid grid-cols-2">
+        <Schedule
+          currentSong={currentSong}
+          setCurrentSong={setCurrentSong}
+        />
         <LyricSelector
           Socket={Socket!}
           currentSong={currentSong}
