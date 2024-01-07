@@ -7,6 +7,8 @@ export default function Preview() {
   const [Socket, setSocket] = useState<Socket<ServerEvents, ClientEvents> | null>()
   const [currentSong, setCurrentSong] = useState('')
   const [currentLyric, setCurrentLyric] = useState(0)
+  const [isClear, setClear] = useState(false)
+
 
   useEffect(() => {
     SocketInitializer()
@@ -29,10 +31,19 @@ export default function Preview() {
     setCurrentLyric(lyric)
   })
 
+  Socket?.on('Clear', () => {
+    setClear(!isClear)
+  })
+
   return (
     <div className="flex text-center items-center justify-center min-h-full">
       <h1 className="text-center m-auto font-bold text-wrap text-5xl">
-        {schedule.find(v => v.id === currentSong)?.lyrics[currentLyric]}
+        {
+          isClear ?
+            <></>
+            :
+            schedule.find(v => v.id === currentSong)?.lyrics[currentLyric]
+        }
       </h1>
     </div>
   )

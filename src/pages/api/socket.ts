@@ -21,6 +21,10 @@ const SocketHandler = (
       socket.on('sendLyric', (songId: string, lyric: number) => {
         io.to('Preview').emit('Lyric', songId, lyric)
       })
+
+      socket.on('sendClear', () => {
+        io.to('Preview').emit('Clear')
+      })
     })
     
     res.socket.server.io = io

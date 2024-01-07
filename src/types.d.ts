@@ -23,10 +23,12 @@ interface basicClient {
 interface ClientEvents {
   RegisterClient: (clientType: "Preview" | "Control" | "Admin") => void
   sendLyric: (songId: string, lyric: number) => void
+  sendClear: () => void
 }
 
 interface ServerEvents {
   Lyric: (songId: string, lyric: number) => void
+  Clear: () => void
 }
 
 interface Song {
