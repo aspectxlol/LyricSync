@@ -22,10 +22,6 @@ export default function LyricSelector({ Socket, currentSong }: LyricSelectorProp
     }
   };
 
-  useEffect(() => {
-    console.log(currentButtonIndex, currentButtonIndex - 1, schedule.find(v => v.id === currentSong)?.lyrics[currentButtonIndex - 1])
-  }, [currentSong, currentButtonIndex])
-
   function sendLyric(currentSong: string, index: number) {
     Socket.emit('sendLyric', currentSong, index)
   }
