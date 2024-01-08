@@ -38,19 +38,6 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ dateParam, timeParam })
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      // let countdownString = '';
-      // if (days > 0) {
-      //   countdownString += `${days}d `;
-      // }
-      // if (hours > 0 || days > 0) {
-      //   countdownString += `${hours}h `;
-      // }
-      // if (minutes > 0 || hours > 0 || days > 0) {
-      //   countdownString += `${minutes}m `;
-      // }
-      // countdownString += `${seconds}s`;
-
-      // setCountdown(countdownString);
       if (hours > 0) {
         setCountdown(`${hours}h ${minutes}m ${seconds}s`);
       } else {

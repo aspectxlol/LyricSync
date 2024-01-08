@@ -1,4 +1,5 @@
 import CountdownTimer from '@LyricSync/components/CountdownTimer';
+import StaticCountdownTimer from '@LyricSync/components/StaticCountdownTimer';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
@@ -17,13 +18,14 @@ const MyPage = () => {
     }
     if (router.query.type === 'static') {
       setType('static');
-      setTimeParam((Array.isArray(router.query.time) ? router.query.time.join('') : router.query.time) || '0:05:00'); // default to 5 minutes if not provided
+      setTimeParam((Array.isArray(router.query.time) ? router.query.time.join('') : router.query.time) || '0:00:02'); // default to 5 minutes if not provided
     }
   }, [router.query]);
 
   return (
     <div className='flex text-center items-center justify-center min-h-full m-auto font-bold text-wrap text-5xl'>
       {type === 'totime' && <CountdownTimer dateParam={dateParam} timeParam={timeParam} />}
+      {type === 'static' && <StaticCountdownTimer timeParam={timeParam} />}
     </div>
   );
 };
