@@ -4,19 +4,17 @@ import { ClientEvents, ServerEvents } from "@LyricSync/types"
 import { useState, useEffect } from "react"
 import { Socket, io } from "socket.io-client"
 
-// ... (your imports)
-
 export default function Preview() {
   const [socket, setSocket] = useState<Socket<ServerEvents, ClientEvents> | null>();
   const [currentSong, setCurrentSong] = useState('');
   const [currentLyric, setCurrentLyric] = useState(0);
+  const [isClear, setClear] = useState(false)
 
   useEffect(() => {
     SocketInitializer();
   }, []);
 
   useEffect(() => {
-    // Auto-scroll to the current lyric whenever it changes
     if (currentSong && currentLyric !== undefined) {
       const lyricElement = document.getElementById(`lyric-${currentLyric}`);
       if (lyricElement) {
@@ -45,18 +43,23 @@ export default function Preview() {
     setCurrentLyric(lyric);
   });
 
+  socket?.on('Clear', () => {
+    setClear(!isClear)
+  })
+
   return (
     <div className="flex text-center items-center justify-center min-h-full overflow-hidden flex-col">
       <div className="text-center fixed top-1 left-auto bg-black text-white rounded-full">
-        {/* Assuming LiveClock is a valid component */}
         <LiveClock />
+        {isClear ? <h1>Cleared</h1> : <h1>Not Cleared</h1>}
       </div>
+
       <div className="text-center m-auto font-bold text-wrap text-3xl transition-transform duration-500 mt-24">
         {schedule
           .find((v) => v.id === currentSong)
           ?.lyrics.map((v, i) => (
             <h1
-              id={`lyric-${i}`} // Add an ID for each lyric element
+              id={`lyric-${i}`}
               className={`${i === currentLyric ? 'text-black opacity-100 ' : 'text-black opacity-50'}`}
               key={i}
             >
