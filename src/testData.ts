@@ -1,4 +1,4 @@
-import { Song } from "./types";
+import { Song } from "@prisma/client";
 
 export const schedule: Song[] = [
     {
@@ -178,5 +178,48 @@ export const schedule: Song[] = [
       createdAt: new Date(Date.now()),
       updatedAt: new Date(Date.now()),
       scheduleId: 'Schedule1'
+  },
+  {
+      id: 'item8',
+      title: 'Raja Damai',
+      lyrics: [
+        "Seorang Anak t'lah lahir untuk kita",
+        "Seorang Putera dib'rikan",
+        "Lambang pem'rintahan di atas bahu-Nya",
+        "Dan nama-Nya pun disebut orang",
+        "Penasehat Ajaib",
+        "Allah Yang Perkasa",
+        "Bapa Yang Kekal (Kekal)",
+        "Raja Damai",
+        "Sambutlah Dia",
+        "Yesus Tuhan",
+        "Juru S'lamat dunia",
+        "(Uh-hu, hu-hu-hu)",
+        "(Ha-ah-ha-ah)",
+        "Seorang Anak t'lah lahir untuk kita",
+        "Seorang Putera dib'rikan",
+        "Lambang pem'rintahan di atas bahu-Nya",
+        "Dan nama-Nya pun disebut orang",
+        "Penasehat Ajaib (Penasehat Ajaib)",
+        "Allah Yang Perkasa (Allah Yang Perkasa)",
+        "Bapa Yang Kekal (Bapa Yang Kekal)",
+        "Raja Damai (Raja Damai)",
+        "Sambutlah Dia",
+        "Yesus Tuhan (Yesus Tuhan)",
+        "Juru S'lamat dunia (Juru S'lamat dunia)",
+        "Penasehat Ajaib (Penasehat Ajaib)",
+        "Allah Yang Perkasa (Allah Yang Perkasa)",
+        "Bapa Yang Kekal",
+        "Raja Damai",
+        "Sambutlah Dia",
+        "Yesus Tuhan",
+        "Juru S'lamat dunia",
+        "Juru S'lamat dunia",
+        "Juru S'lamat dunia",
+      ],
+      createdAt: new Date(Date.now()),
+      updatedAt: new Date(Date.now()),
+      scheduleId: 'Schedule1'
     },
   ]
+  

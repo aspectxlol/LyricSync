@@ -2,7 +2,7 @@
 
 import ScheduleItemCard from '@LyricSync/components/ScheduleItemCard';
 import { schedule } from '@LyricSync/testData';
-import { Song } from '@LyricSync/types';
+import { Song } from '@prisma/client';
 import React, { useState, useCallback, MouseEvent } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 

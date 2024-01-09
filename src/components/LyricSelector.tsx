@@ -1,7 +1,7 @@
 import React, { KeyboardEvent, useEffect, useState, useRef } from "react";
 import { Socket } from "socket.io-client";
 import { schedule } from "@LyricSync/testData";
-import { ClientEvents, Song } from "@LyricSync/types";
+import { ClientEvents } from "@LyricSync/types";
 
 interface LyricSelectorProps {
   Socket: Socket<ClientEvents>;

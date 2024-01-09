@@ -30,12 +30,3 @@ interface ServerEvents {
   Lyric: (songId: string, lyric: number) => void
   Clear: () => void
 }
-
-interface Song {
-  id: string
-  title: string
-  lyrics: string[]
-  createdAt: Date
-  updatedAt: Date
-  scheduleId: string
-}

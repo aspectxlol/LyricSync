@@ -1,4 +1,4 @@
-import { Song } from "@LyricSync/types";
+import { Song } from "@prisma/client";
 
 interface ScheduleItemProps {
   item: ScheduleItem;
