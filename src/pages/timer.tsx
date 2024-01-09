@@ -11,7 +11,7 @@ const MyPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (router.query.type === 'totime') {
+    if (router.query.type?.toString().toLocaleLowerCase() === 'totime') {
       setType('totime');
       setDateParam((Array.isArray(router.query.date) ? router.query.date.join('') : router.query.date) || '0/8/2024');
       setTimeParam((Array.isArray(router.query.time) ? router.query.time.join('') : router.query.time) || '24:00:00');

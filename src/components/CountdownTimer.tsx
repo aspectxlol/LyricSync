@@ -11,13 +11,12 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ dateParam, timeParam })
   useEffect(() => {
     const dateArray = dateParam.split('/');
     const timeArray = timeParam.split(':');
-    const defaultCountdownDate = new Date(2025, 0, 1, 0, 0, 0).getTime();
     let countdownDate: number;
 
     countdownDate = new Date(
       Number(dateArray[2]),
-      Number(dateArray[1]) - 1,
       Number(dateArray[0]),
+      Number(dateArray[1]),
       Number(timeArray[0]),
       Number(timeArray[1]),
       Number(timeArray[2])
@@ -27,10 +26,10 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ dateParam, timeParam })
       const now = new Date().getTime();
       let distance = countdownDate - now;
 
-      const currentHour = new Date().getHours();
-      if (currentHour === 0) {
-        distance = countdownDate - now + 24 * 60 * 60 * 1000;
-        countdownDate += 24 * 60 * 60 * 1000;
+      if (distance < 0) {
+        clearInterval(interval);
+        setCountdown('EXPIRED');
+        return;
       }
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -38,16 +37,12 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ dateParam, timeParam })
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      if (hours > 0) {
+      if (days > 0) {
+        setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`)
+      } else if (hours > 0) {
         setCountdown(`${hours}h ${minutes}m ${seconds}s`);
       } else {
-        setCountdown(`${minutes}m ${seconds}s`)
-      }
-
-
-      if (distance < 0) {
-        clearInterval(interval);
-        setCountdown('EXPIRED');
+        setCountdown(`${minutes}m ${seconds}s`);
       }
     }, 1000);
 
