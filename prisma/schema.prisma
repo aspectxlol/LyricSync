@@ -11,16 +11,18 @@ datasource db {
 }
 
 model Song {
-  id         String   @id @default(uuid())
-  title      String
+  id         String    @id @default(uuid())
+  title      String    @unique
   lyrics     String[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  scheduleId String
-  schedule   Schedule @relation(fields: [scheduleId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  scheduleId String?
+  schedule   Schedule? @relation(fields: [scheduleId], references: [id])
 }
 
 model Schedule {
-  id    String @id @default(uuid())
-  songs Song[]
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  songs     Song[]
 }
