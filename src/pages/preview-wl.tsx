@@ -51,7 +51,6 @@ export default function Preview() {
     <div className="flex text-center items-center justify-center min-h-full overflow-hidden flex-col">
       <div className="text-center fixed top-1 left-auto bg-black text-white rounded-full">
         <LiveClock />
-        {isClear ? <h1>Cleared</h1> : <h1>Not Cleared</h1>}
       </div>
 
       <div className="text-center m-auto font-bold text-wrap text-3xl transition-transform duration-500 mt-24">
@@ -60,7 +59,7 @@ export default function Preview() {
           ?.lyrics.map((v, i) => (
             <h1
               id={`lyric-${i}`}
-              className={`${i === currentLyric ? 'text-black opacity-100 ' : 'text-black opacity-50'}`}
+              className={`${i === currentLyric && isClear === false ? 'text-black opacity-100 ' : 'text-black opacity-50'}`}
               key={i}
             >
               {v}

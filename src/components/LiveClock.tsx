@@ -31,7 +31,7 @@ class LiveClock extends Component {
   render() {
     return (
       <div className="rounded-full p-1 px-5 bg-gray-700">
-        <span className="text-white text-3xl">{moment(this.state.date).format('hh:mm:ss a')}</span>
+        <span className="text-white text-2xl">{moment(this.state.date).format('hh:mm:ss a')}</span>
       </div>
     );
   }
