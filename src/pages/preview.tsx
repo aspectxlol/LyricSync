@@ -1,14 +1,32 @@
 import { schedule } from "@LyricSync/testData"
 import { ClientEvents, ServerEvents } from "@LyricSync/types"
+import { trpc } from "@LyricSync/utils/trpc"
+import { Song } from "@prisma/client"
 import { useState, useEffect } from "react"
 import { Socket, io } from "socket.io-client"
 
 export default function Preview() {
   const [Socket, setSocket] = useState<Socket<ServerEvents, ClientEvents> | null>()
   const [currentSong, setCurrentSong] = useState('')
+  const [Song, setSong] = useState<Song>()
   const [currentLyric, setCurrentLyric] = useState(0)
   const [isClear, setClear] = useState(false)
 
+  const data = trpc.song.get.useQuery({ id: currentSong })
+  useEffect(() => {
+    if (!data.error && data.data?.length) {
+      const newSong = {
+        ...data.data[0],
+        createdAt: new Date(data.data[0].createdAt),
+        updatedAt: new Date(data.data[0].updatedAt)
+      };
+
+      // Only update song if the new song is different from the current song
+      if (JSON.stringify(newSong) !== JSON.stringify(Song)) {
+        setSong(newSong);
+      }
+    }
+  }, [data, Song]);
 
   useEffect(() => {
     SocketInitializer()
@@ -42,7 +60,7 @@ export default function Preview() {
           isClear ?
             <></>
             :
-            schedule.find(v => v.id === currentSong)?.lyrics[currentLyric]
+            Song?.lyrics[currentLyric]
         }
       </h1>
     </div>

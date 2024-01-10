@@ -1,8 +1,9 @@
 import '@LyricSync/styles/globals.css'
+import { trpc } from '@LyricSync/utils/trpc'
 import type { AppProps } from 'next/app'
 import { Toaster } from 'react-hot-toast'
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return <>
     <Toaster
       position='top-right'
@@ -11,3 +12,5 @@ export default function App({ Component, pageProps }: AppProps) {
     <Component {...pageProps} />
   </>
 }
+
+export default trpc.withTRPC(App)

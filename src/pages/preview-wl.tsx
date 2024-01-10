@@ -1,6 +1,8 @@
 import LiveClock from "@LyricSync/components/LiveClock"
 import { schedule } from "@LyricSync/testData"
 import { ClientEvents, ServerEvents } from "@LyricSync/types"
+import { trpc } from "@LyricSync/utils/trpc"
+import { Song } from "@prisma/client"
 import { useState, useEffect } from "react"
 import { Socket, io } from "socket.io-client"
 
@@ -9,6 +11,23 @@ export default function Preview() {
   const [currentSong, setCurrentSong] = useState('');
   const [currentLyric, setCurrentLyric] = useState(0);
   const [isClear, setClear] = useState(false)
+  const [Song, setSong] = useState<Song>()
+
+  const data = trpc.song.get.useQuery({ id: currentSong })
+  useEffect(() => {
+    if (!data.error && data.data?.length) {
+      const newSong = {
+        ...data.data[0],
+        createdAt: new Date(data.data[0].createdAt),
+        updatedAt: new Date(data.data[0].updatedAt)
+      };
+
+      // Only update song if the new song is different from the current song
+      if (JSON.stringify(newSong) !== JSON.stringify(Song)) {
+        setSong(newSong);
+      }
+    }
+  }, [data, Song]);
 
   useEffect(() => {
     SocketInitializer();
@@ -54,17 +73,15 @@ export default function Preview() {
       </div>
 
       <div className="text-center m-auto font-bold text-wrap text-3xl transition-transform duration-500 mt-24">
-        {schedule
-          .find((v) => v.id === currentSong)
-          ?.lyrics.map((v, i) => (
-            <h1
-              id={`lyric-${i}`}
-              className={`${i === currentLyric && isClear === false ? 'text-black opacity-100 ' : 'text-black opacity-50'}`}
-              key={i}
-            >
-              {v}
-            </h1>
-          ))}
+        {Song?.lyrics.map((v, i) => (
+          <h1
+            id={`lyric-${i}`}
+            className={`${i === currentLyric && isClear === false ? 'text-black opacity-100 ' : 'text-black opacity-50'}`}
+            key={i}
+          >
+            {v}
+          </h1>
+        ))}
       </div>
     </div>
   );

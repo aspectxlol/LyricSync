@@ -2,6 +2,8 @@ import React, { KeyboardEvent, useEffect, useState, useRef } from "react";
 import { Socket } from "socket.io-client";
 import { schedule } from "@LyricSync/testData";
 import { ClientEvents } from "@LyricSync/types";
+import { trpc } from "@LyricSync/utils/trpc";
+import { Song } from "@prisma/client";
 
 interface LyricSelectorProps {
   Socket: Socket<ClientEvents>;
@@ -11,6 +13,23 @@ interface LyricSelectorProps {
 export default function LyricSelector({ Socket, currentSong }: LyricSelectorProps) {
   const [currentButtonIndex, setCurrentButtonIndex] = useState(0);
   const lyricSelectorRef = useRef<HTMLDivElement>(null);
+  const [Song, setSong] = useState<Song>()
+
+  const data = trpc.song.get.useQuery({ id: currentSong })
+  useEffect(() => {
+    if (!data.error && data.data?.length) {
+      const newSong = {
+        ...data.data[0],
+        createdAt: new Date(data.data[0].createdAt),
+        updatedAt: new Date(data.data[0].updatedAt)
+      };
+
+      // Only update song if the new song is different from the current song
+      if (JSON.stringify(newSong) !== JSON.stringify(Song)) {
+        setSong(newSong);
+      }
+    }
+  }, [data, Song]);
 
   useEffect(() => {
     // Auto-scroll to the current button whenever it changes
@@ -57,25 +76,23 @@ export default function LyricSelector({ Socket, currentSong }: LyricSelectorProp
         onKeyDown={handleKeyDown}
         tabIndex={0} // Required for the div to receive keyboard events
       >
-        {schedule
-          .find((v) => v.id === currentSong)
-          ?.lyrics.map((v, i) => {
-            if (v.length <= 0) return;
-            return (
-              <button
-                onClick={() => {
-                  handleClick(i);
-                }}
-                key={`lyrics-${i}`}
-                id={"button-" + i}
-                className={`focus:outline-none text-left m-1 ${i + 1 === currentButtonIndex ? "bg-primary" : ""
-                  } p-1 rounded border-2 inline-block hover:bg-secondary`}
-              >
-                <span className="m-1 border-r-2 p-1">{i}</span>
-                <span>{v}</span>
-              </button>
-            );
-          })}
+        {Song?.lyrics.map((v, i) => {
+          if (v.length <= 0) return;
+          return (
+            <button
+              onClick={() => {
+                handleClick(i);
+              }}
+              key={`lyrics-${i}`}
+              id={"button-" + i}
+              className={`focus:outline-none text-left m-1 ${i + 1 === currentButtonIndex ? "bg-primary" : ""
+                } p-1 rounded border-2 inline-block hover:bg-secondary`}
+            >
+              <span className="m-1 border-r-2 p-1">{i}</span>
+              <span>{v}</span>
+            </button>
+          );
+        })}
       </div>
     </>
   );

@@ -2,8 +2,9 @@
 
 import ScheduleItemCard from '@LyricSync/components/ScheduleItemCard';
 import { schedule } from '@LyricSync/testData';
+import { trpc } from '@LyricSync/utils/trpc';
 import { Song } from '@prisma/client';
-import React, { useState, useCallback, MouseEvent } from 'react';
+import React, { useState, useCallback, MouseEvent, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 interface ScheduleProps {
@@ -12,7 +13,23 @@ interface ScheduleProps {
 }
 
 export default function Schedule({ setCurrentSong, currentSong }: ScheduleProps) {
-  const [Schedules, setSchedules] = useState<Song[]>(schedule)
+  const [Schedules, setSchedules] = useState<Song[]>([])
+
+  const data = trpc.song.get.useQuery({})
+  useEffect(() => {
+    if (!data.error && data.data?.length) {
+      const formattedData = data.data.map(song => ({
+        ...song,
+        createdAt: new Date(song.createdAt),
+        updatedAt: new Date(song.updatedAt),
+      }));
+
+      // Only update schedules if the formatted data is different from the current schedules
+      if (JSON.stringify(formattedData) !== JSON.stringify(Schedules)) {
+        setSchedules(formattedData);
+      }
+    }
+  }, [data, Schedules]);
 
   const handleDragEnd = useCallback((result: any) => {
     if (!result.destination) return;

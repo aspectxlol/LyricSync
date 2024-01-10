@@ -6,8 +6,9 @@ import { Socket, io } from "socket.io-client"
 
 export default function Dashboard() {
   const [Socket, setSocket] = useState<Socket<ServerEvents, ClientEvents> | null>()
-  const [currentSong, setCurrentSong] = useState('item5')
+  const [currentSong, setCurrentSong] = useState('16c517f3-7264-4ecc-8928-9ccb5ac4fec2')
   const [Clear, setClear] = useState(false)
+  // const [I, setI] = useState(0)
 
   useEffect(() => {
     SocketInitializer()
