@@ -7,7 +7,12 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <>
-      {/**this fucking son of a bitch was the thing that didnt allow shit to render all this fucking time, im about to kill everyone around me */}
+      {/**
+       * this fucking son of a bitch 
+       * was the thing that didnt allow shit to render 
+       * all this fucking time, 
+       * im about to kill everyone around me 
+       * */}
       <Outlet />
     </>
   )
