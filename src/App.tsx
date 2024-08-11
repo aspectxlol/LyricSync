@@ -1,7 +1,7 @@
-import { useSocket } from "./hooks/useSocket";
+// import { useSocket } from "./hooks/useSocket";
 
 function App() {
-  const { socket } = useSocket({})
+  // const { socket } = useSocket({})
 
   return (
     <div>
