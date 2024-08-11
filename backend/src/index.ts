@@ -14,7 +14,7 @@ const httpServer = createServer(app)
 const io = new Server(httpServer, { cors: { origin: '*' } })
 
 io.on('connection', (socket) => {
-  console.log(socket.connected)
+  console.log(socket.id)
 })
 
 httpServer.listen(process.env.PORT || 3000, () => {
