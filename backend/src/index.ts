@@ -11,10 +11,10 @@ app.use(bodyParser.json())
 app.use(cors())
 
 const httpServer = createServer(app)
-const io = new Server(httpServer, { cors: { origin: ['*'] } })
+const io = new Server(httpServer, { cors: { origin: '*' } })
 
-io.on('connect', (socket) => {
-  console.log(socket.id)
+io.on('connection', (socket) => {
+  console.log(socket.connected)
 })
 
 httpServer.listen(process.env.PORT || 3000, () => {
