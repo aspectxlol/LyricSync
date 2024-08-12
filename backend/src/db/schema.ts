@@ -29,29 +29,6 @@ export const lyricsRelations = relations(lyrics, ({ one }) => ({
   }),
 }))
 
-// export const users = sqliteTable('users', {
-//   id: integer('id').primaryKey(),
-//   name: text('name'),
-// });
-
-// export const usersRelations = relations(users, ({ many }) => ({
-//   posts: many(posts),
-// }));
-
-// export const posts = sqliteTable('posts', {
-//   id: integer('id').primaryKey(),
-//   content: text('content'),
-//   authorId: integer('author_id'),
-// });
-
-// export const postsRelations = relations(posts, ({ one }) => ({
-//   author: one(users, {
-//     fields: [posts.authorId],
-//     references: [users.id],
-//   }),
-// }));
-
-
 export const songSchema = z.object({
   title: z.string().min(1).max(255),
   author: z.string().min(1).max(255),
