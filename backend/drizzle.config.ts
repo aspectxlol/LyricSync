@@ -2,9 +2,8 @@ import { type Config } from "drizzle-kit";
 
 export default {
   schema: "./src/db/schema.ts",
-  dialect: "postgresql",
+  dialect: "sqlite",
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
-  // tablesFilter: ["lyricSyng*"],
 } satisfies Config;

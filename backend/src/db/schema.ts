@@ -1,22 +1,59 @@
+import { relations } from "drizzle-orm";
 import {
-  bigint,
-  char,
-	pgTable,
-} from "drizzle-orm/pg-core";
+  integer,
+  text,
+  sqliteTable,
+} from "drizzle-orm/sqlite-core";
+import { z } from "zod";
 
-export const song = pgTable("Song", {
-	id: bigint("id", { mode: "number" }).primaryKey().notNull(),
-	title: char("Title", { length: 255 }).notNull(),
-	author: char("Author", { length: 255 }).notNull(),
-	lyric: bigint("Lyric", { mode: "number" }).notNull().references(() => lyric.id),
+export const songs = sqliteTable('songs', {
+  id: integer('id').primaryKey(),
+  title: text('title'),
+  author: text('author'),
 });
 
-export const schedule = pgTable("Schedule", {
-	id: bigint("id", { mode: "number" }).primaryKey().notNull(),
-	songs: bigint("Songs", { mode: "number" }).notNull().references(() => song.id),
+export const songRelations = relations(songs, ({ many }) => ({
+  lyrics: many(lyrics),
+}));
+
+export const lyrics = sqliteTable('lyrics', {
+  id: integer('id').primaryKey(),
+  content: text('content'),
+  songId: integer('song_id'),
 });
 
-export const lyric = pgTable("Lyric", {
-	id: bigint("id", { mode: "number" }).primaryKey().notNull(),
-	content: char("content", { length: 255 }).notNull(),
+export const lyricsRelations = relations(lyrics, ({ one }) => ({
+  song: one(songs, {
+    fields: [lyrics.songId],
+    references: [songs.id],
+  }),
+}))
+
+// export const users = sqliteTable('users', {
+//   id: integer('id').primaryKey(),
+//   name: text('name'),
+// });
+
+// export const usersRelations = relations(users, ({ many }) => ({
+//   posts: many(posts),
+// }));
+
+// export const posts = sqliteTable('posts', {
+//   id: integer('id').primaryKey(),
+//   content: text('content'),
+//   authorId: integer('author_id'),
+// });
+
+// export const postsRelations = relations(posts, ({ one }) => ({
+//   author: one(users, {
+//     fields: [posts.authorId],
+//     references: [users.id],
+//   }),
+// }));
+
+
+export const songSchema = z.object({
+  title: z.string().min(1).max(255),
+  author: z.string().min(1).max(255),
+  lyric: z.array(z.string()).min(1).max(100),
 });
