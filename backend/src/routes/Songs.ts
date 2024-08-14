@@ -1,5 +1,6 @@
 import express, { type Request, type Response } from 'express'
-import { songSchema, songs, lyrics } from '../db/schema'
+import { songs, lyrics } from '../db/schema'
+import { songSchema } from '../types'
 
 import { validateData } from '../middlewares/validateData'
 import { db } from '../db'
@@ -27,11 +28,6 @@ router.post('/add', validateData(songSchema), async (req: Request, res: Response
 router.get('/all', async (req: Request, res: Response) => {
   const songs = await db.query.songs.findMany({ with: { lyrics: true } })
   res.status(200).json(songs)
-})
-
-router.all('/all', async (req: Request, res: Response) => {
-  const posts = await db.query.songs.findMany({ with: { lyrics: true } })
-  res.status(200).json(posts)
 })
 
 export default router

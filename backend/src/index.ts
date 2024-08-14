@@ -6,6 +6,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 
 import SongRoute from './routes/Songs'
+import BackgroundRoute from './routes/Background'
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/song', SongRoute)
+app.use('/background', BackgroundRoute)
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!')

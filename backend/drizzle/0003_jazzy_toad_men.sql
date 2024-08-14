@@ -1,0 +1,1 @@
+ALTER TABLE `background` ADD `original_name` text;

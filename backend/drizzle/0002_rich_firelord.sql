@@ -1,0 +1,1 @@
+ALTER TABLE `background` DROP COLUMN `content`;

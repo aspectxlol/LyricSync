@@ -4,7 +4,6 @@ import {
   text,
   sqliteTable,
 } from "drizzle-orm/sqlite-core";
-import { z } from "zod";
 
 export const songs = sqliteTable('songs', {
   id: integer('id').primaryKey(),
@@ -29,8 +28,8 @@ export const lyricsRelations = relations(lyrics, ({ one }) => ({
   }),
 }))
 
-export const songSchema = z.object({
-  title: z.string().min(1).max(255),
-  author: z.string().min(1).max(255),
-  lyric: z.array(z.string()).min(1).max(100),
+export const background = sqliteTable('background', {
+  id: integer('id').primaryKey(),
+  fileName: text('file_name'),
+  originalName: text('original_name'),
 });
