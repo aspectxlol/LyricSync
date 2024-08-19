@@ -25,7 +25,9 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 io.on('connection', (socket) => {
-  console.log(socket.id)
+  socket.on('lyric', (id, content) => {
+    console.log(id, socket.id, content)
+  })
 })
 
 httpServer.listen(process.env.PORT || 3000, () => {
@@ -34,7 +36,7 @@ httpServer.listen(process.env.PORT || 3000, () => {
     \x1b[32m\x1b[1mLyricSync Backend Server v0.1.0\x1b[0m \x1b[90mReady
 
     \x1b[0m\x1b[32m-> \x1b[0mLocal: \x1b[36mhttp://localhost:${process.env.PORT || 3000}/
-    \x1b[0m\x1b[32m-> \x1b[0m\x1b[90mPress \x1b[37mCTRL + C \x1b[90mto exit
+    \x1b[0m\x1b[32m-> \x1b[0m\x1b[90mPress \x1b[37mCTRL + C \x1b[90mto exit\x1b[0m
   `
   console.log(startMessage)
 })

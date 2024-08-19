@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { type Song } from '../types'
+import { io, Socket } from 'socket.io-client'
 
 export const Route = createFileRoute('/song')({
   component: () => <Song />
@@ -8,28 +9,48 @@ export const Route = createFileRoute('/song')({
 
 function Song() {
   const [songs, setSongs] = useState<Song[]>([])
-  
+  const [isConnected, setIsConnected] = useState(false)
+  const SocketRef = useRef<Socket>()
+
   useEffect(() => {
     fetch('http://localhost:3000/song/all')
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         setSongs(data)
       })
+    
+      SocketRef.current = io('localhost:3000/', { transports: ['websocket'] })
+      
+      SocketRef.current.on('connect', () => {
+        setIsConnected(true)
+      })
+    
+    return () => {
+      if (SocketRef.current) {
+        SocketRef.current.disconnect()
+        SocketRef.current.removeAllListeners()
+      }
+    }
   }, [])
 
   return (
     <div>
+      <h1>{isConnected ? 'Connected' : 'Not connected'}</h1>
       <h1>Song</h1>
-      {songs.map(song => (
+      {SocketRef.current && 
+      songs.map(song => (
         <div key={song.id}>
           <h2>{song.title}</h2>
           <p>{song.author}</p>
           {song.lyrics.map(lyric => (
-            <p key={lyric.id}>{lyric.content}</p>
+            <div key={lyric.id} onClick={() => SocketRef.current?.emit('lyric', lyric.id, lyric.content)}>
+              <p>{lyric.content}</p>
+
+            </div>
           ))}
         </div>
-      ))}
+      ))
+      }
     </div>
   )
 }
