@@ -5,7 +5,7 @@ import 'dotenv/config'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
-import SongRoute from './routes/Songs'
+import SongRoute from './routes/Song'
 import BackgroundRoute from './routes/Background'
 
 const app = express()
@@ -29,5 +29,12 @@ io.on('connection', (socket) => {
 })
 
 httpServer.listen(process.env.PORT || 3000, () => {
-  console.log(`Listening on Port ${process.env.PORT || 3000}`)
+  console.clear()
+  const startMessage = `
+    \x1b[32m\x1b[1mLyricSync Backend Server v0.1.0\x1b[0m \x1b[90mReady
+
+    \x1b[0m\x1b[32m-> \x1b[0mLocal: \x1b[36mhttp://localhost:${process.env.PORT || 3000}/
+    \x1b[0m\x1b[32m-> \x1b[0m\x1b[90mPress \x1b[37mCTRL + C \x1b[90mto exit
+  `
+  console.log(startMessage)
 })
