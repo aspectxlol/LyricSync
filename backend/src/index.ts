@@ -25,8 +25,19 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 io.on('connection', (socket) => {
+  socket.on('join', (room) => {
+    socket.join(room)
+  })
+
   socket.on('lyric', (id, content) => {
     console.log(id, socket.id, content)
+
+    io.to('Live').emit('lyric', id, content)
+
+  })
+
+  socket.on('disconnect', () => {
+
   })
 })
 

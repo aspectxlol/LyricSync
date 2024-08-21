@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SongImport } from './routes/song'
+import { Route as LiveImport } from './routes/live'
 import { Route as BackgroundImport } from './routes/background'
 import { Route as IndexImport } from './routes/index'
 
@@ -19,6 +20,11 @@ import { Route as IndexImport } from './routes/index'
 
 const SongRoute = SongImport.update({
   path: '/song',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LiveRoute = LiveImport.update({
+  path: '/live',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -50,6 +56,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BackgroundImport
       parentRoute: typeof rootRoute
     }
+    '/live': {
+      id: '/live'
+      path: '/live'
+      fullPath: '/live'
+      preLoaderRoute: typeof LiveImport
+      parentRoute: typeof rootRoute
+    }
     '/song': {
       id: '/song'
       path: '/song'
@@ -65,6 +78,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   BackgroundRoute,
+  LiveRoute,
   SongRoute,
 })
 
@@ -78,6 +92,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/background",
+        "/live",
         "/song"
       ]
     },
@@ -86,6 +101,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/background": {
       "filePath": "background.tsx"
+    },
+    "/live": {
+      "filePath": "live.tsx"
     },
     "/song": {
       "filePath": "song.tsx"

@@ -12,6 +12,10 @@ function Song() {
   const [isConnected, setIsConnected] = useState(false)
   const SocketRef = useRef<Socket>()
 
+  useEffect(() =>{
+    if (!isConnected) SocketRef.current = io('localhost:3000/', { transports: ['websocket'] })
+  }, [isConnected])
+
   useEffect(() => {
     fetch('http://localhost:3000/song/all')
       .then(res => res.json())
@@ -19,11 +23,11 @@ function Song() {
         setSongs(data)
       })
     
-      SocketRef.current = io('localhost:3000/', { transports: ['websocket'] })
-      
-      SocketRef.current.on('connect', () => {
-        setIsConnected(true)
-      })
+    if (!SocketRef.current) return;
+    SocketRef.current.on('connect', () => {
+      setIsConnected(true)
+      SocketRef.current?.emit('join', 'Live', 'Dashboard')
+    })
     
     return () => {
       if (SocketRef.current) {
