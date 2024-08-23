@@ -47,9 +47,8 @@ function Song() {
           <h2>{song.title}</h2>
           <p>{song.author}</p>
           {song.lyrics.map(lyric => (
-            <div key={lyric.id} onClick={() => SocketRef.current?.emit('lyric', lyric.id, lyric.content)}>
+            <div key={lyric.id} onClick={() => SocketRef.current?.emit('lyric', song.id,lyric.id, lyric.content)}>
               <p>{lyric.content}</p>
-
             </div>
           ))}
         </div>

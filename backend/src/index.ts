@@ -29,11 +29,8 @@ io.on('connection', (socket) => {
     socket.join(room)
   })
 
-  socket.on('lyric', (id, content) => {
-    console.log(id, socket.id, content)
-
-    io.to('Live').emit('lyric', id, content)
-
+  socket.on('lyric', (songId, lyricId, content) => {
+    io.to('Live').emit('lyric', songId, lyricId, content)
   })
 
   socket.on('disconnect', () => {

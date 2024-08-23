@@ -80,7 +80,7 @@ router.post('/add', backgroundUpload.array('background'), async (req: Request, r
   router.get('/get/:id', async (req: Request, res: Response) => {
   const id = req.params.id
   const result = await db.transaction(async (tx) => {
-    const returnedBackground = await tx.select().from(background).where(eq(background.fileName, id))
+    const returnedBackground = (await tx.select().from(background).where(eq(background.fileName, id)))
     return returnedBackground[0]
   })
   try {

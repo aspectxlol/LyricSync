@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as SongImport } from './routes/song'
 import { Route as LiveImport } from './routes/live'
+import { Route as ConfidenceImport } from './routes/confidence'
 import { Route as BackgroundImport } from './routes/background'
 import { Route as IndexImport } from './routes/index'
 
@@ -25,6 +26,11 @@ const SongRoute = SongImport.update({
 
 const LiveRoute = LiveImport.update({
   path: '/live',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ConfidenceRoute = ConfidenceImport.update({
+  path: '/confidence',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -56,6 +62,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BackgroundImport
       parentRoute: typeof rootRoute
     }
+    '/confidence': {
+      id: '/confidence'
+      path: '/confidence'
+      fullPath: '/confidence'
+      preLoaderRoute: typeof ConfidenceImport
+      parentRoute: typeof rootRoute
+    }
     '/live': {
       id: '/live'
       path: '/live'
@@ -78,6 +91,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   BackgroundRoute,
+  ConfidenceRoute,
   LiveRoute,
   SongRoute,
 })
@@ -92,6 +106,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/background",
+        "/confidence",
         "/live",
         "/song"
       ]
@@ -101,6 +116,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/background": {
       "filePath": "background.tsx"
+    },
+    "/confidence": {
+      "filePath": "confidence.tsx"
     },
     "/live": {
       "filePath": "live.tsx"

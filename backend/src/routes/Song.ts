@@ -4,6 +4,7 @@ import { songSchema } from '../types'
 
 import { validateData } from '../middlewares/validateData'
 import { db } from '../db'
+import { eq } from 'drizzle-orm'
 
 const router = express.Router()
 
@@ -28,6 +29,18 @@ router.post('/add', validateData(songSchema), async (req: Request, res: Response
 router.get('/all', async (req: Request, res: Response) => {
   const songs = await db.query.songs.findMany({ with: { lyrics: true } })
   res.status(200).json(songs)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  //@ts-expect-error @ts-ignore
+  const result = await db.select().from(songs).where(eq(songs.id, req.params.id))
+  res.status(200).json(result)
+})
+
+router.get('/:id/lyrics', async (req: Request, res: Response) => {
+  //@ts-expect-error @ts-ignore
+  const result = await db.select().from(lyrics).where(eq(lyrics.songId, req.params.id))
+  res.status(200).json(result)
 })
 
 export default router
