@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { type Song } from '../types'
 import { io, Socket } from 'socket.io-client'
 
-export const Route = createFileRoute('/song')({
+export const Route = createFileRoute('/dashboard')({
   component: () => <Song />
 })
 

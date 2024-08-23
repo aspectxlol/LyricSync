@@ -11,26 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SongImport } from './routes/song'
-import { Route as LiveImport } from './routes/live'
-import { Route as ConfidenceImport } from './routes/confidence'
+import { Route as DashboardImport } from './routes/dashboard'
 import { Route as BackgroundImport } from './routes/background'
 import { Route as IndexImport } from './routes/index'
+import { Route as LiveIndexImport } from './routes/live/index'
+import { Route as LiveConfidenceImport } from './routes/live/confidence'
 
 // Create/Update Routes
 
-const SongRoute = SongImport.update({
-  path: '/song',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LiveRoute = LiveImport.update({
-  path: '/live',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ConfidenceRoute = ConfidenceImport.update({
-  path: '/confidence',
+const DashboardRoute = DashboardImport.update({
+  path: '/dashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -41,6 +31,16 @@ const BackgroundRoute = BackgroundImport.update({
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LiveIndexRoute = LiveIndexImport.update({
+  path: '/live/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LiveConfidenceRoute = LiveConfidenceImport.update({
+  path: '/live/confidence',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -62,25 +62,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BackgroundImport
       parentRoute: typeof rootRoute
     }
-    '/confidence': {
-      id: '/confidence'
-      path: '/confidence'
-      fullPath: '/confidence'
-      preLoaderRoute: typeof ConfidenceImport
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardImport
       parentRoute: typeof rootRoute
     }
-    '/live': {
-      id: '/live'
+    '/live/confidence': {
+      id: '/live/confidence'
+      path: '/live/confidence'
+      fullPath: '/live/confidence'
+      preLoaderRoute: typeof LiveConfidenceImport
+      parentRoute: typeof rootRoute
+    }
+    '/live/': {
+      id: '/live/'
       path: '/live'
       fullPath: '/live'
-      preLoaderRoute: typeof LiveImport
-      parentRoute: typeof rootRoute
-    }
-    '/song': {
-      id: '/song'
-      path: '/song'
-      fullPath: '/song'
-      preLoaderRoute: typeof SongImport
+      preLoaderRoute: typeof LiveIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -91,9 +91,9 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   BackgroundRoute,
-  ConfidenceRoute,
-  LiveRoute,
-  SongRoute,
+  DashboardRoute,
+  LiveConfidenceRoute,
+  LiveIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -106,9 +106,9 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/background",
-        "/confidence",
-        "/live",
-        "/song"
+        "/dashboard",
+        "/live/confidence",
+        "/live/"
       ]
     },
     "/": {
@@ -117,14 +117,14 @@ export const routeTree = rootRoute.addChildren({
     "/background": {
       "filePath": "background.tsx"
     },
-    "/confidence": {
-      "filePath": "confidence.tsx"
+    "/dashboard": {
+      "filePath": "dashboard.tsx"
     },
-    "/live": {
-      "filePath": "live.tsx"
+    "/live/confidence": {
+      "filePath": "live/confidence.tsx"
     },
-    "/song": {
-      "filePath": "song.tsx"
+    "/live/": {
+      "filePath": "live/index.tsx"
     }
   }
 }

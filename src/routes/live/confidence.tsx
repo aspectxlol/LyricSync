@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState, useRef, useEffect } from 'react'
 import { io, Socket } from 'socket.io-client'
 
-export const Route = createFileRoute('/confidence')({
+export const Route = createFileRoute('/live/confidence')({
   component: () => <Confidence />
 })
 

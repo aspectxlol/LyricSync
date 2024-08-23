@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState, useRef, useEffect } from 'react'
 import { io, Socket } from 'socket.io-client'
 
-export const Route = createFileRoute('/live')({
+export const Route = createFileRoute('/live/')({
   component: () => <Live />
 })
 
