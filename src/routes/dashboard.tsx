@@ -2,13 +2,16 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { type Song } from '../types'
 import { io, Socket } from 'socket.io-client'
+import SongPicker from '../components/SongPicker'
+// import Background from '../components/backgroundPicker'
 
 export const Route = createFileRoute('/dashboard')({
   component: () => <Song />
 })
 
 function Song() {
-  const [songs, setSongs] = useState<Song[]>([])
+  // const [songs, setSongs] = useState<Song[]>([])
+  const [activeSong, setActiveSong] = useState<Song>()
   const [isConnected, setIsConnected] = useState(false)
   const SocketRef = useRef<Socket>()
 
@@ -17,12 +20,6 @@ function Song() {
   }, [isConnected])
 
   useEffect(() => {
-    fetch('http://localhost:3000/song/all')
-      .then(res => res.json())
-      .then(data => {
-        setSongs(data)
-      })
-    
     if (!SocketRef.current) return;
     SocketRef.current.on('connect', () => {
       setIsConnected(true)
@@ -38,22 +35,33 @@ function Song() {
   }, [])
 
   return (
-    <div>
-      <h1>{isConnected ? 'Connected' : 'Not connected'}</h1>
-      <h1>Song</h1>
-      {SocketRef.current && 
-      songs.map(song => (
-        <div key={song.id}>
-          <h2>{song.title}</h2>
-          <p>{song.author}</p>
-          {song.lyrics.map(lyric => (
-            <div key={lyric.id} onClick={() => SocketRef.current?.emit('lyric', song.id,lyric.id, lyric.content)}>
-              <p>{lyric.content}</p>
-            </div>
-          ))}
-        </div>
-      ))
+    <div className='p-5'>
+      <SongPicker setActiveSong={setActiveSong} />
+      <LyricPicker activeSong={activeSong} />
+    </div>
+  )
+}
+
+function LyricPicker({ activeSong }: { activeSong: Song | undefined}) {
+  
+  return (
+    <div className='flex flex-col w-fit'>
+      <h1 className='text-center text-3xl font-bold'>Lyrics</h1>
+      {
+        !activeSong ?
+          <h1 className='w-64 p-2'>Select a song</h1> : 
+          <div className='p-2'>
+            {activeSong.lyrics.map((lyric, index) => (
+              <div key={lyric.id} className='w-64 rounded-lg hover:shadow-2xl flex flex-row border-black border-2'>
+                <div className='bg-red-500 w-6 min-h-5 rounded-l-lg text-center font-bold'>{index + 1}</div>
+                <div className='p-2 w-full'>
+                  <h2 className='font-bold'>{lyric.content}</h2>
+                </div>
+              </div>
+            ))}
+          </div>
       }
     </div>
   )
+
 }

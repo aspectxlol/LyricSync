@@ -1,12 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
-import LSDropzone from '../components/LSDropzone'
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
+import LSDropzone from "./LSDropzone"
 
-export const Route = createFileRoute('/background')({
-  component: () => <Background />
-})
-
-function Background() {
+export default function Background() {
   const [backgroundIds, setBackgroundIds] = useState<{id: number, fileName: string, originalName: string}[]>([])
 
   useEffect(() => {

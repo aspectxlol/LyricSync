@@ -12,20 +12,15 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
-import { Route as BackgroundImport } from './routes/background'
 import { Route as IndexImport } from './routes/index'
 import { Route as LiveIndexImport } from './routes/live/index'
+import { Route as LiveTextImport } from './routes/live/text'
 import { Route as LiveConfidenceImport } from './routes/live/confidence'
 
 // Create/Update Routes
 
 const DashboardRoute = DashboardImport.update({
   path: '/dashboard',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const BackgroundRoute = BackgroundImport.update({
-  path: '/background',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -36,6 +31,11 @@ const IndexRoute = IndexImport.update({
 
 const LiveIndexRoute = LiveIndexImport.update({
   path: '/live/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LiveTextRoute = LiveTextImport.update({
+  path: '/live/text',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -55,13 +55,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/background': {
-      id: '/background'
-      path: '/background'
-      fullPath: '/background'
-      preLoaderRoute: typeof BackgroundImport
-      parentRoute: typeof rootRoute
-    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -74,6 +67,13 @@ declare module '@tanstack/react-router' {
       path: '/live/confidence'
       fullPath: '/live/confidence'
       preLoaderRoute: typeof LiveConfidenceImport
+      parentRoute: typeof rootRoute
+    }
+    '/live/text': {
+      id: '/live/text'
+      path: '/live/text'
+      fullPath: '/live/text'
+      preLoaderRoute: typeof LiveTextImport
       parentRoute: typeof rootRoute
     }
     '/live/': {
@@ -90,9 +90,9 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  BackgroundRoute,
   DashboardRoute,
   LiveConfidenceRoute,
+  LiveTextRoute,
   LiveIndexRoute,
 })
 
@@ -105,23 +105,23 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/background",
         "/dashboard",
         "/live/confidence",
+        "/live/text",
         "/live/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/background": {
-      "filePath": "background.tsx"
-    },
     "/dashboard": {
       "filePath": "dashboard.tsx"
     },
     "/live/confidence": {
       "filePath": "live/confidence.tsx"
+    },
+    "/live/text": {
+      "filePath": "live/text.tsx"
     },
     "/live/": {
       "filePath": "live/index.tsx"
